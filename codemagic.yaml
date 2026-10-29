@@ -2,7 +2,7 @@
 # Assinatura: o próprio build cria/baixa o certificado de distribuição e o perfil App Store
 # pela chave de API (integração abaixo). A chave privada do certificado fica no grupo de
 # variáveis "apple_signing" do Codemagic (CERTIFICATE_PRIVATE_KEY) — mesma pros 3 apps.
-# Cada build vai direto pro TestFlight.
+# Cada build sobe pro TestFlight (teste interno).
 workflows:
   ios-release:
     name: Meu Financiamento - iOS
@@ -44,4 +44,6 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration
-        submit_to_testflight: true
+        # Só sobe pro TestFlight (teste INTERNO, sem revisão). Teste externo exige preencher
+        # Informações de teste no App Store Connect — ligar depois, se precisar.
+        submit_to_testflight: false
