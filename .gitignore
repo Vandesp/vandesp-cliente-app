@@ -1,0 +1,20 @@
+# NUNCA subir a chave de assinatura do Android nem senhas pro GitHub
+keystore/
+*.jks
+*.keystore
+*.p12
+*.p8
+*.mobileprovision
+key.properties
+
+node_modules/
+
+# Android fica só nesta máquina (assinatura e build local); o Codemagic só compila o iOS
+android/
+
+# Saídas de build
+ios/App/build/
+build/
+*.ipa
+*.aab
+*.apk

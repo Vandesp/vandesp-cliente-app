@@ -1,0 +1,28 @@
+{
+  "appId": "br.com.vandesp.cliente",
+  "appName": "Meu Financiamento",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "backgroundColor": "#FFFFFF",
+      "androidSplashResourceName": "splash",
+      "showSpinner": false
+    },
+    "PushNotifications": {
+      "presentationOptions": [
+        "badge",
+        "sound",
+        "alert"
+      ]
+    },
+    "SystemBars": {
+      "insetsHandling": "css",
+      "style": "LIGHT",
+      "initialViewportFitValueHint": "cover"
+    }
+  }
+}

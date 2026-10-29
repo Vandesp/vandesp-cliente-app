@@ -1,0 +1,21 @@
+{
+  "name": "vandesp-meu-financiamento",
+  "version": "1.0.0",
+  "description": "Meu Financiamento Vandesp - App do Cliente (Capacitor). Conteúdo web = crm-vandesp-functions-deploy/www/cliente.html",
+  "private": true,
+  "scripts": {
+    "cap:sync": "npx cap sync"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/browser": "^8.0.5",
+    "@capacitor/cli": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/ios": "^8.6.0",
+    "@capacitor/push-notifications": "^8.1.3",
+    "@capacitor/splash-screen": "^8.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5"
+  }
+}
