@@ -1,6 +1,8 @@
 # Build do Meu Financiamento pra iPhone no Codemagic (Mac na nuvem).
-# A assinatura é automática pela integração com o App Store Connect (chave de API
-# cadastrada no Codemagic com o nome abaixo). Cada build vai direto pro TestFlight.
+# Assinatura: o próprio build cria/baixa o certificado de distribuição e o perfil App Store
+# pela chave de API (integração abaixo). A chave privada do certificado fica no grupo de
+# variáveis "apple_signing" do Codemagic (CERTIFICATE_PRIVATE_KEY) — mesma pros 3 apps.
+# Cada build vai direto pro TestFlight.
 workflows:
   ios-release:
     name: Meu Financiamento - iOS
@@ -9,10 +11,10 @@ workflows:
     integrations:
       app_store_connect: Vandesp App Store Connect
     environment:
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: br.com.vandesp.cliente
+      groups:
+        - apple_signing
       vars:
+        BUNDLE_ID: "br.com.vandesp.cliente"
         XCODE_PROJECT: "ios/App/App.xcodeproj"
         XCODE_SCHEME: "App"
         # Apple ID numérico do app (App Store Connect → Informações do app). Preencher
@@ -25,8 +27,12 @@ workflows:
         script: npm ci
       - name: Copiar o site pro projeto iOS
         script: npx cap sync ios
-      - name: Aplicar perfis de assinatura
-        script: xcode-project use-profiles
+      - name: Certificado e perfil de distribuição (cria se não existir)
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
+          keychain add-certificates
+          xcode-project use-profiles
       - name: Número do build (sempre 1 acima do último no TestFlight)
         script: |
           ULTIMO=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" || echo 0)
