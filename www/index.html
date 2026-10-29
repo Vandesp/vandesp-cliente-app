@@ -25,6 +25,9 @@ html,body{margin:0;height:100%}
 body{background:var(--bg);color:var(--ink);font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 button,input,select,textarea{font-family:inherit;font-size:15px;color:inherit}
 .app{max-width:480px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+/* iPhone: ao rolar, o que é sticky no topo ia pra baixo do relógio/bateria (Luis, 29/10/2026) —
+   faixa fixa com o fundo atrás da barra de status + sticky começando abaixo dela */
+body::before{content:'';position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top);background:var(--bg);z-index:40}
 .tela{display:none;flex:1;flex-direction:column}
 .tela.ativa{display:flex}
 .topo{padding:28px 24px 18px;display:flex;flex-direction:column;gap:4px}
@@ -145,7 +148,7 @@ a.up{display:flex;align-items:center;text-decoration:none}
 .seletor select{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);padding:0 12px;font-weight:700}
 
 /* Cabeçalho das telas internas */
-.cab{padding:20px 16px 14px;background:var(--card);display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:2}
+.cab{padding:20px 16px 14px;background:var(--card);display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top);z-index:2}
 .cab h2{margin:0;font-size:17px;font-weight:800;flex:1}
 
 /* Documentos */
@@ -1373,7 +1376,7 @@ a.up{display:flex;align-items:center;text-decoration:none}
       };
     }
     const barra = document.createElement('div');
-    barra.style.cssText = 'position:sticky;top:0;z-index:10;background:#F5A800;color:#0B1B33;padding:10px 16px;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;flex-wrap:wrap';
+    barra.style.cssText = 'position:sticky;top:env(safe-area-inset-top);z-index:10;background:#F5A800;color:#0B1B33;padding:10px 16px;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;flex-wrap:wrap';
     barra.innerHTML = `<span>MODO DEMONSTRAÇÃO</span>
       <label for="demo-etapa" class="sr">Etapa</label>
       <select id="demo-etapa" style="flex:1;min-width:180px;height:36px;border-radius:10px;border:none;padding:0 10px;font-weight:700">
