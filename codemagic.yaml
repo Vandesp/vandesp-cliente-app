@@ -17,7 +17,7 @@ workflows:
         XCODE_SCHEME: "App"
         # Apple ID numérico do app (App Store Connect → Informações do app). Preencher
         # depois de criar o app lá.
-        APP_STORE_APPLE_ID: "PREENCHER"
+        APP_STORE_APPLE_ID: "6828523357"
       node: 24
       xcode: latest
     scripts:
