@@ -705,6 +705,13 @@ a.up{display:flex;align-items:center;text-decoration:none}
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
         <span style="flex:1;min-width:0"><strong>${esc(a.titulo)}</strong><small>${esc(a.nome)}</small></span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg></a>`).join('')}</div>`;
+    // Simulação anexada no LEAD (cliente que pediu só simulação, antes de rodar o crédito — Luis, 30/10/2026).
+    // Aparece na etapa atual até "Análise de crédito"; de "Crédito aprovado" em diante ela já vem em arquivosAprovacao.
+    const simsLead = (p.etapaAtual < 2 && !p.naoAprovado) ? (p.simulacoes || []) : [];
+    const blocoSimLead = simsLead.length ? `<div class="sec-docs" style="margin-top:12px">Sua simulação</div><div class="arq-lista">${simsLead.map(a => `<a class="arq" href="${esc(a.url)}" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+        <span style="flex:1;min-width:0"><strong>Ver simulação</strong><small>${esc(a.nome)}</small></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg></a>`).join('')}</div>` : '';
     // "Documentação e vistoria": docs do imóvel + o que a equipe mandou pra assinar
     const imovelEnviados = (p.documentosImovel || []).filter(d => d.enviado).length;
     const pendAssinar = (p.paraAssinar || []).filter(d => !d.assinado).length;
@@ -784,6 +791,7 @@ a.up{display:flex;align-items:center;text-decoration:none}
           ${e.estado === 'atual' ? `<div class="tl-data">${e.alerta ? 'Em defesa' : 'Em andamento'}${e.data ? ' · desde ' + esc(e.data) : ''}</div>` : (e.data ? `<div class="tl-data">${esc(e.data)}</div>` : '')}
           ${!aberta ? '' : `
           ${e.texto ? `<div class="tl-nota ${e.alerta ? 'alerta' : ''}${i === 2 ? ' forte' : ''}">${esc(e.texto)}</div>` : ''}
+          ${i === p.etapaAtual ? blocoSimLead : ''}
           ${i === 0 && e.estado === 'atual' ? anexarDocs : ''}
           ${i === iBancos && e.estado !== 'futuro' ? blocoBancos : ''}
           ${i === 2 && e.estado !== 'futuro' && arquivosRestantes.length ? arquivosAprov : ''}
